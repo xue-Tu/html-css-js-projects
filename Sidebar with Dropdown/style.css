@@ -94,6 +94,23 @@ body {
   transition: all 0.4s ease;
 }
 
+.sidebar-nav .primary-nav {
+  overflow-y: auto; 
+  height: calc(100vh - 204px); 
+  padding-bottom: 50px; 
+  scrollbar-width: thin ;
+  scrollbar-color: transparent transparent; 
+}
+
+.sidebar-nav .primary-nav:hover {
+  scrollbar-color: #EEF2FF transparent; 
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+  overflow-y: unset; 
+  transform: translateY(65px);
+}
+
 .sidebar-nav .nav-item .nav-link {
   display: flex;
   gap: 12px;
@@ -107,7 +124,7 @@ body {
   white-space: nowrap;
 }
 
-.sidebar-nav .nav-item:hover > .nav-link:not(.dropdown-title) {
+.sidebar-nav .nav-item:is(:hover, .open) > .nav-link:not(.dropdown-title) {
   background-color: #eef2ff;
   color: #151a2e;
 }
@@ -142,6 +159,10 @@ body {
   transition: opacity 0.3s 0s ease;
 }
 
+.sidebar-nav .dropdown-container.open .dropdown-icon {
+  transform: rotate(180deg);
+}
+
 .sidebar-nav .dropdown-menu {
   height: 0;
   overflow-y: hidden;
@@ -159,9 +180,13 @@ body {
   overflow-y: unset;
   pointer-events: none;
   background: #151a2e;
-  padding: 7px 10px 7px 24px;
+  padding-right: 10px;
   border-radius: 0 10px 10px 0;
   transition: 0s;
+}
+
+.sidebar.collapsed .dropdown-menu:has(.dropdown-link) {
+  padding: 7px 10px 7px 24px;
 }
 
 .sidebar.collapsed .nav-item:hover .dropdown-menu {
@@ -181,9 +206,44 @@ body {
 
 .dropdown-menu .nav-item .dropdown-title {
   display: none;
+}
+
+.dropdown-menu:has(.dropdown-link) .nav-item .dropdown-title {
   font-weight: 500;
 }
 
 .sidebar.collapsed .dropdown-menu .nav-item .dropdown-title {
   display: block;
+}
+
+
+/* Responsive media query code from small screens */
+@media (max-width: 768px) {
+  .sidebar-menu-button {
+    display: block ;
+    position: fixed; 
+    left:  20px; 
+    top: 20px; 
+    border: none; 
+    color: #151a2e; 
+    background: none; 
+    cursor: pointer; 
+  }
+
+  .sidebar-menu-button span {
+    font-size: 1.8rem; 
+  }
+
+  .sidebar.collapsed {
+    width: 260px; 
+    left: -260px; 
+  }
+
+  .sidebar.collapsed .sidebar-header .sidebar-toggler {
+    transform: none; 
+  }
+
+  .sidebar.collapsed .sidebar-nav .primary-nav {
+    transform: translateY(15px);
+  }
 }
